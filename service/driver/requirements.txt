@@ -1,0 +1,11 @@
+click==6.7
+Flask==0.12.2
+Flask-SQLAlchemy==2.3.2
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+passlib==1.7.1
+psycopg2==2.7.3.2
+PyJWT==1.5.3
+SQLAlchemy==1.1.15
+Werkzeug==0.12.2
