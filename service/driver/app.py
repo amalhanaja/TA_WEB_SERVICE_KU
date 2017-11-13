@@ -11,6 +11,7 @@ from sqlalchemy.exc import IntegrityError
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
+token_expiration_time = datetime.timedelta(days=365)
 
 
 class Driver(db.Model):
@@ -142,13 +143,23 @@ def login_driver():
         abort(404)
     if fcm_token != driver.fcm_token:
         abort(401)
-    token_expiration_time = datetime.timedelta(days=365)
     token = driver.generate_token(expires_in=token_expiration_time)
     return jsonify(
         accessToken=token.decode("utf-8"),
         expiresIn=token_expiration_time.total_seconds(),
         tokenType="Bearer")
 
+
+@app.route("/driver/refresh_token")
+@requires_token
+def refresh_token():
+    driver = g.driver
+    token = driver.generate_token(expires_in=token_expiration_time)
+    return jsonify(
+        accessToken=token.decode("utf-8"),
+        expiresIn=token_expiration_time.total_seconds(),
+        tokenType="Bearer"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001, host="0.0.0.0")

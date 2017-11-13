@@ -1,0 +1,9 @@
+version : '1' # Version of Docker Compose Format
+
+services:
+  driver-service:
+    build: ./service/driver
+    volumes:
+      - ./service/driver:/user/src/app
+    ports:
+      - 5001:80 # HOST: CONTAINER
