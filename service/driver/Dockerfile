@@ -1,5 +1,4 @@
 FROM python:3.6.3
-
-COPY . /usr/src/app
-
-CMD ["python", "app.py"]
+ADD . /sani/driver
+WORKDIR /sani/driver
+RUN pip install -r requirements.txt

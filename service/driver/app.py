@@ -91,7 +91,7 @@ def requires_token(f):
     return decorated
 
 
-@app.route("/driver/register", methods=["POST"])
+@app.route("/register", methods=["POST"])
 def register_driver():
     username = request.json.get("username")
     password = request.json.get("password")
@@ -124,14 +124,14 @@ def register_driver():
         abort(401)
 
 
-@app.route("/driver", methods=["GET"])
+@app.route("/", methods=["GET"])
 @requires_token
 def get_driver():
     driver = g.driver
     return jsonify(driver.__dict__)
 
 
-@app.route("/driver/login", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login_driver():
     username = request.json.get("username")
     password = request.json.get("password")
@@ -150,7 +150,7 @@ def login_driver():
         tokenType="Bearer")
 
 
-@app.route("/driver/refresh_token")
+@app.route("/refresh_token")
 @requires_token
 def refresh_token():
     driver = g.driver

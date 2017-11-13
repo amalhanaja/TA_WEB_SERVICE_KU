@@ -2,8 +2,28 @@ version : '1' # Version of Docker Compose Format
 
 services:
   driver-service:
+    restart: always
     build: ./service/driver
     volumes:
-      - ./service/driver:/user/src/app
+      - /user/src/app/static
+    expose:
+      - "8000"
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+  nginx:
+    restart: always
+    build: ./nginx/
     ports:
-      - 5001:80 # HOST: CONTAINER
+      - "80:80"
+    volumes:
+      - /www/static
+    volumes_from:
+      - driver-service
+    links:
+      - haproxy
+      - driver-service: driver-service
+  haproxy:
+    image: 'dockercloud/haproxy:latest'
+    links:
+        - driver-service
+    environment:
+        - BACKEND_PORT=8000
