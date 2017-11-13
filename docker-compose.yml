@@ -1,6 +1,10 @@
 version : '1' # Version of Docker Compose Format
 
 services:
+  location-subscriber:
+    restart: always
+    build: ./service/location_subscriber
+
   driver-service:
     restart: always
     build: ./service/driver
