@@ -1,4 +1,4 @@
-version : '1' # Version of Docker Compose Format
+version : '3' # Version of Docker Compose Format
 
 services:
   location-subscriber:
