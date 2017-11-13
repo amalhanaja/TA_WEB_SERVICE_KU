@@ -16,11 +16,11 @@ services:
       - "80:80"
     volumes:
       - /www/static
-    volumes_from:
-      - driver-service
+    volumes:
+      - /user/src/app/static
     links:
-      - haproxy
-      - driver-service: driver-service
+      - "haproxy"
+      - "driver-service: driver-service"
   haproxy:
     image: 'dockercloud/haproxy:latest'
     links:
